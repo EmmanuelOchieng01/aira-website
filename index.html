@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AIRA — Applied Intelligence & Research Associates</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --teal: #0d6e6e;
+    --teal-light: #0f8080;
+    --teal-pale: #e6f4f4;
+    --teal-mid: #b2d8d8;
+    --gold: #c9a84c;
+    --white: #ffffff;
+    --off-white: #f8fafa;
+    --ink: #0d1f1f;
+    --ink-mid: #2a4040;
+    --ink-light: #4a6060;
+    --border: #d4e8e8;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--white);
+    color: var(--ink);
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.2rem 5%;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem; font-weight: 600; letter-spacing: 0.08em;
+    color: var(--teal); text-decoration: none;
+  }
+
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    font-size: 0.82rem; font-weight: 500; letter-spacing: 0.06em;
+    text-transform: uppercase; color: var(--ink-mid);
+    text-decoration: none; transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--teal); }
+
+  .nav-cta {
+    background: var(--teal); color: var(--white) !important;
+    padding: 0.55rem 1.4rem; border-radius: 2px;
+    transition: background 0.2s !important;
+  }
+  .nav-cta:hover { background: var(--teal-light) !important; color: var(--white) !important; }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: grid; grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 8rem 5% 4rem;
+    background: var(--white);
+    position: relative; overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute; top: -10%; right: -5%;
+    width: 55%; height: 120%;
+    background: var(--teal-pale);
+    clip-path: polygon(15% 0%, 100% 0%, 100% 100%, 0% 100%);
+    z-index: 0;
+  }
+
+  .hero-text { position: relative; z-index: 1; }
+
+  .hero-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--teal);
+    margin-bottom: 1.5rem;
+    display: flex; align-items: center; gap: 0.8rem;
+  }
+  .hero-eyebrow::before {
+    content: ''; display: block;
+    width: 2rem; height: 1px; background: var(--teal);
+  }
+
+  .hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.8rem, 5vw, 4.5rem);
+    font-weight: 300; line-height: 1.1;
+    color: var(--ink); margin-bottom: 1rem;
+  }
+
+  .hero h1 em {
+    font-style: italic; color: var(--teal);
+  }
+
+  .hero-tagline {
+    font-size: 1.05rem; font-weight: 300;
+    color: var(--ink-light); line-height: 1.7;
+    max-width: 480px; margin-bottom: 2.5rem;
+  }
+
+  .hero-tagline strong { color: var(--ink); font-weight: 500; }
+
+  .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+  .btn-primary {
+    background: var(--teal); color: var(--white);
+    padding: 0.85rem 2rem; font-size: 0.85rem;
+    font-weight: 500; letter-spacing: 0.05em;
+    text-decoration: none; border-radius: 2px;
+    transition: background 0.2s, transform 0.15s;
+    display: inline-block;
+  }
+  .btn-primary:hover { background: var(--teal-light); transform: translateY(-1px); }
+
+  .btn-outline {
+    border: 1px solid var(--teal); color: var(--teal);
+    padding: 0.85rem 2rem; font-size: 0.85rem;
+    font-weight: 500; letter-spacing: 0.05em;
+    text-decoration: none; border-radius: 2px;
+    transition: all 0.2s; display: inline-block;
+  }
+  .btn-outline:hover { background: var(--teal); color: var(--white); transform: translateY(-1px); }
+
+  .hero-visual {
+    position: relative; z-index: 1;
+    display: flex; justify-content: center; align-items: center;
+  }
+
+  .hero-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 2rem;
+    width: 320px;
+    box-shadow: 0 20px 60px rgba(13,110,110,0.1);
+  }
+
+  .hero-card-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--teal);
+    margin-bottom: 1.2rem;
+  }
+
+  .metric-row {
+    display: flex; justify-content: space-between;
+    align-items: flex-end; margin-bottom: 1.5rem;
+  }
+
+  .metric-val {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.4rem; font-weight: 500; color: var(--ink);
+  }
+
+  .metric-label { font-size: 0.75rem; color: var(--ink-light); }
+
+  .mini-bar-wrap { margin-bottom: 1rem; }
+  .mini-bar-label {
+    display: flex; justify-content: space-between;
+    font-size: 0.72rem; color: var(--ink-light); margin-bottom: 4px;
+  }
+  .mini-bar { height: 4px; background: var(--teal-pale); border-radius: 2px; overflow: hidden; }
+  .mini-bar-fill { height: 100%; background: var(--teal); border-radius: 2px; }
+
+  .hero-card-footer {
+    border-top: 1px solid var(--border); padding-top: 1rem; margin-top: 1rem;
+    font-size: 0.72rem; color: var(--teal); font-weight: 500;
+  }
+
+  /* ── SECTION BASE ── */
+  section { padding: 6rem 5%; }
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--teal); margin-bottom: 1rem;
+    display: flex; align-items: center; gap: 0.8rem;
+  }
+  .section-label::before { content: ''; width: 2rem; height: 1px; background: var(--teal); }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    font-weight: 400; line-height: 1.2; color: var(--ink);
+    margin-bottom: 1rem;
+  }
+
+  .section-sub {
+    font-size: 1rem; color: var(--ink-light);
+    line-height: 1.75; max-width: 560px;
+  }
+
+  /* ── VALUES ── */
+  .values { background: var(--ink); color: var(--white); }
+  .values .section-label { color: var(--teal-mid); }
+  .values .section-label::before { background: var(--teal-mid); }
+  .values .section-title { color: var(--white); }
+  .values .section-sub { color: rgba(255,255,255,0.6); }
+
+  .values-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1px; margin-top: 4rem;
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .value-card {
+    padding: 2.5rem;
+    border-right: 1px solid rgba(255,255,255,0.08);
+    transition: background 0.3s;
+  }
+  .value-card:last-child { border-right: none; }
+  .value-card:hover { background: rgba(13,110,110,0.15); }
+
+  .value-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3rem; font-weight: 300; color: var(--teal-mid);
+    opacity: 0.4; margin-bottom: 1rem; line-height: 1;
+  }
+
+  .value-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem; font-weight: 500; color: var(--white);
+    margin-bottom: 0.75rem;
+  }
+
+  .value-desc { font-size: 0.88rem; color: rgba(255,255,255,0.55); line-height: 1.75; }
+
+  /* ── SERVICES ── */
+  .services { background: var(--off-white); }
+
+  .services-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem; margin-top: 3.5rem;
+  }
+
+  .service-card {
+    background: var(--white); border: 1px solid var(--border);
+    border-radius: 4px; padding: 2.5rem;
+    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+    position: relative; overflow: hidden;
+  }
+  .service-card::before {
+    content: ''; position: absolute; top: 0; left: 0;
+    width: 3px; height: 0; background: var(--teal);
+    transition: height 0.3s;
+  }
+  .service-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(13,110,110,0.1); border-color: var(--teal-mid); }
+  .service-card:hover::before { height: 100%; }
+
+  .service-icon {
+    width: 48px; height: 48px; background: var(--teal-pale);
+    border-radius: 4px; display: flex; align-items: center; justify-content: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .service-icon svg { width: 22px; height: 22px; stroke: var(--teal); fill: none; stroke-width: 1.5; }
+
+  .service-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem; font-weight: 500; color: var(--ink);
+    margin-bottom: 0.5rem;
+  }
+
+  .service-tag {
+    font-family: 'DM Mono', monospace; font-size: 0.65rem;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--teal); margin-bottom: 1rem;
+  }
+
+  .service-desc { font-size: 0.88rem; color: var(--ink-light); line-height: 1.75; }
+
+  .service-list { list-style: none; margin-top: 1.2rem; }
+  .service-list li {
+    font-size: 0.82rem; color: var(--ink-light); padding: 0.35rem 0;
+    border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 0.6rem;
+  }
+  .service-list li::before { content: '→'; color: var(--teal); font-size: 0.75rem; }
+
+  /* ── PROJECTS ── */
+  .projects-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem; margin-top: 3.5rem;
+  }
+
+  .project-card {
+    border: 1px solid var(--border); border-radius: 4px;
+    overflow: hidden; transition: transform 0.2s, box-shadow 0.2s;
+    text-decoration: none; display: block;
+    background: var(--white);
+  }
+  .project-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(13,110,110,0.12); }
+
+  .project-img {
+    height: 160px; background: var(--teal-pale);
+    display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+  }
+
+  .project-img-pattern {
+    position: absolute; inset: 0;
+    background-image: repeating-linear-gradient(
+      45deg, transparent, transparent 10px,
+      rgba(13,110,110,0.06) 10px, rgba(13,110,110,0.06) 11px
+    );
+  }
+
+  .project-img-icon {
+    position: relative; z-index: 1;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3rem; color: var(--teal); opacity: 0.5;
+  }
+
+  .project-body { padding: 1.5rem; }
+
+  .project-tech {
+    font-family: 'DM Mono', monospace; font-size: 0.62rem;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--teal); margin-bottom: 0.6rem;
+  }
+
+  .project-title {
+    font-size: 1rem; font-weight: 500; color: var(--ink);
+    margin-bottom: 0.5rem; line-height: 1.35;
+  }
+
+  .project-desc { font-size: 0.82rem; color: var(--ink-light); line-height: 1.65; }
+
+  .project-link {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    margin-top: 1rem; font-size: 0.78rem; font-weight: 500;
+    color: var(--teal); text-decoration: none;
+  }
+  .project-link:hover { text-decoration: underline; }
+
+  /* ── TEAM ── */
+  .team { background: var(--off-white); }
+
+  .team-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem; margin-top: 3.5rem;
+  }
+
+  .team-card {
+    background: var(--white); border: 1px solid var(--border);
+    border-radius: 4px; padding: 2.5rem;
+    display: flex; flex-direction: column; align-items: flex-start;
+  }
+
+  .team-avatar {
+    width: 72px; height: 72px; border-radius: 50%;
+    background: var(--teal); display: flex; align-items: center; justify-content: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem; font-weight: 500; color: var(--white);
+    margin-bottom: 1.5rem; letter-spacing: 0.03em;
+  }
+
+  .team-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem; font-weight: 500; color: var(--ink);
+    margin-bottom: 0.3rem;
+  }
+
+  .team-role {
+    font-family: 'DM Mono', monospace; font-size: 0.68rem;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--teal); margin-bottom: 1.2rem;
+  }
+
+  .team-bio { font-size: 0.88rem; color: var(--ink-light); line-height: 1.75; }
+
+  .team-skills {
+    display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.5rem;
+  }
+
+  .skill-tag {
+    font-size: 0.72rem; padding: 0.3rem 0.8rem;
+    background: var(--teal-pale); color: var(--teal);
+    border-radius: 2px; font-weight: 500;
+  }
+
+  /* ── CONTACT ── */
+  .contact { background: var(--ink); color: var(--white); text-align: center; }
+  .contact .section-label { color: var(--teal-mid); justify-content: center; }
+  .contact .section-label::before { background: var(--teal-mid); }
+  .contact .section-title { color: var(--white); }
+  .contact .section-sub { color: rgba(255,255,255,0.55); margin: 0 auto 3rem; }
+
+  .contact-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1px; border: 1px solid rgba(255,255,255,0.08);
+    margin-bottom: 3rem; max-width: 800px; margin-left: auto; margin-right: auto;
+  }
+
+  .contact-item {
+    padding: 2rem;
+    border-right: 1px solid rgba(255,255,255,0.08);
+  }
+  .contact-item:last-child { border-right: none; }
+
+  .contact-item-label {
+    font-family: 'DM Mono', monospace; font-size: 0.65rem;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: rgba(255,255,255,0.35); margin-bottom: 0.6rem;
+  }
+
+  .contact-item-val {
+    font-size: 0.9rem; color: var(--white); font-weight: 400;
+    text-decoration: none; display: block;
+    transition: color 0.2s;
+  }
+  .contact-item-val:hover { color: var(--teal-mid); }
+
+  .social-row {
+    display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;
+    margin-bottom: 3rem;
+  }
+
+  .social-link {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    padding: 0.6rem 1.2rem;
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 2px; color: rgba(255,255,255,0.7);
+    text-decoration: none; font-size: 0.78rem; font-weight: 500;
+    letter-spacing: 0.05em; transition: all 0.2s;
+  }
+  .social-link:hover { border-color: var(--teal-mid); color: var(--teal-mid); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #070f0f; padding: 2rem 5%;
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 1rem;
+    border-top: 1px solid rgba(255,255,255,0.05);
+  }
+
+  .footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem; font-weight: 600; color: var(--teal-mid);
+    letter-spacing: 0.1em;
+  }
+
+  .footer-copy {
+    font-size: 0.75rem; color: rgba(255,255,255,0.25);
+  }
+
+  /* ── SCROLL ANIMATIONS ── */
+  .reveal {
+    opacity: 0; transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    .hero { grid-template-columns: 1fr; padding-top: 7rem; }
+    .hero::before { display: none; }
+    .hero-visual { display: none; }
+    nav { padding: 1rem 4%; }
+    .nav-links { display: none; }
+    .values-grid, .contact-grid { grid-template-columns: 1fr; }
+    .value-card { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .contact-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.08); }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">AIRA</a>
+  <ul class="nav-links">
+    <li><a href="#values">Values</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#work">Work</a></li>
+    <li><a href="#team">Team</a></li>
+    <li><a href="#contact" class="nav-cta">Contact us</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-text">
+    <div class="hero-eyebrow">Applied Intelligence & Research Associates</div>
+    <h1>Where African <em>businesses</em> come to see clearly.</h1>
+    <p class="hero-tagline">
+      We find what your numbers are hiding — then build the <strong>intelligence systems</strong> that turn that clarity into decisions, and those decisions into results.
+    </p>
+    <div class="hero-actions">
+      <a href="#work" class="btn-primary">See our work</a>
+      <a href="#contact" class="btn-outline">Start a conversation</a>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="hero-card">
+      <div class="hero-card-label">Procurement intelligence — sample view</div>
+      <div class="metric-row">
+        <div>
+          <div class="metric-val">KSh 3.2M</div>
+          <div class="metric-label">spend recovered (Q3)</div>
+        </div>
+        <div style="text-align:right">
+          <div class="metric-val" style="color:var(--teal)">94%</div>
+          <div class="metric-label">vendor accuracy</div>
+        </div>
+      </div>
+      <div class="mini-bar-wrap">
+        <div class="mini-bar-label"><span>Supplier A — Logistics</span><span>91%</span></div>
+        <div class="mini-bar"><div class="mini-bar-fill" style="width:91%"></div></div>
+      </div>
+      <div class="mini-bar-wrap">
+        <div class="mini-bar-label"><span>Supplier B — Packaging</span><span>74%</span></div>
+        <div class="mini-bar"><div class="mini-bar-fill" style="width:74%;background:#c9a84c"></div></div>
+      </div>
+      <div class="mini-bar-wrap">
+        <div class="mini-bar-label"><span>Supplier C — Raw Materials</span><span>88%</span></div>
+        <div class="mini-bar"><div class="mini-bar-fill" style="width:88%"></div></div>
+      </div>
+      <div class="hero-card-footer">↑ AIRA Insight Dashboard — live data view</div>
+    </div>
+  </div>
+</section>
+
+<!-- VALUES -->
+<section class="values" id="values">
+  <div class="reveal">
+    <div class="section-label">What we stand for</div>
+    <h2 class="section-title">Two values.<br>Everything else follows.</h2>
+    <p class="section-sub">We built AIRA on two beliefs that shape every engagement, every deliverable, every conversation we have with a client.</p>
+  </div>
+  <div class="values-grid reveal">
+    <div class="value-card">
+      <div class="value-num">01</div>
+      <div class="value-title">Clarity</div>
+      <div class="value-desc">Most organisations are drowning in data and starving for answers. We cut through the noise. Every analysis we deliver is designed to produce one thing — a decision a leader can act on with confidence. No ambiguity. No jargon for its own sake. Just clear intelligence, clearly presented.</div>
+    </div>
+    <div class="value-card">
+      <div class="value-num">02</div>
+      <div class="value-title">Perspective</div>
+      <div class="value-desc">Data without context is just numbers. We bring the perspective of people who understand both how African businesses actually operate and what the data is really saying beneath the surface. We see the full picture — the operational reality, the human dynamics, and the strategic implication — simultaneously.</div>
+    </div>
+    <div class="value-card">
+      <div class="value-num">03</div>
+      <div class="value-title">Operational Excellence, Delivered</div>
+      <div class="value-desc">We do not deliver reports that sit in inboxes. We deliver working intelligence systems, live dashboards, and operational tools that your team can use from day one. Excellence is not a standard we aspire to — it is the only output we ship.</div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="reveal">
+    <div class="section-label">What we do</div>
+    <h2 class="section-title">Three ways AIRA creates value</h2>
+    <p class="section-sub">We work across data science, operations, and AI — combining them in ways tailored precisely to your organisation's most expensive unsolved problems.</p>
+  </div>
+  <div class="services-grid">
+    <div class="service-card reveal">
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M18 17V9M13 17V5M8 17v-3"/></svg>
+      </div>
+      <div class="service-name">AIRA Insight</div>
+      <div class="service-tag">Data & Analytics</div>
+      <div class="service-desc">We map your data, find the signal in the noise, and build dashboards that give your leadership team real-time visibility into what matters most.</div>
+      <ul class="service-list">
+        <li>Procurement spend analysis</li>
+        <li>HR & workforce analytics</li>
+        <li>Demand forecasting models</li>
+        <li>Financial performance dashboards</li>
+        <li>Supplier performance scoring</li>
+      </ul>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.22 4.22l2.12 2.12M17.66 17.66l2.12 2.12M2 12h3M19 12h3M4.22 19.78l2.12-2.12M17.66 6.34l2.12-2.12"/></svg>
+      </div>
+      <div class="service-name">AIRA Operate</div>
+      <div class="service-tag">Operations & Procurement Advisory</div>
+      <div class="service-desc">Human expertise applied to your operational reality. We audit procurement processes, identify inefficiencies, and redesign systems that stop the bleeding.</div>
+      <ul class="service-list">
+        <li>Procurement process audit</li>
+        <li>Vendor due diligence systems</li>
+        <li>HR operations review</li>
+        <li>Cost reduction diagnostics</li>
+        <li>Compliance frameworks</li>
+      </ul>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 10 10"/><path d="M12 6v6l4 2"/><path d="M18 2l4 4-4 4"/><path d="M22 6H18"/></svg>
+      </div>
+      <div class="service-name">AIRA Intelligence</div>
+      <div class="service-tag">AI-Powered Tools</div>
+      <div class="service-desc">Custom AI systems built on your own data. Automated reports, intelligent dashboards, and conversational analytics tools your team will actually use.</div>
+      <ul class="service-list">
+        <li>Custom AI analyst tools</li>
+        <li>Automated reporting systems</li>
+        <li>Natural language data querying</li>
+        <li>Predictive risk models</li>
+        <li>Full-stack web applications</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- WORK -->
+<section id="work">
+  <div class="reveal">
+    <div class="section-label">Our work</div>
+    <h2 class="section-title">Built for the African business reality.</h2>
+    <p class="section-sub">Every project below was designed for a specific, real problem in an East African business context. This is not academic work — it is applied intelligence.</p>
+  </div>
+  <div class="projects-grid">
+
+    <a class="project-card reveal" href="https://github.com/EmmanuelOchieng01/supply_chain_optimizer" target="_blank">
+      <div class="project-img">
+        <div class="project-img-pattern"></div>
+        <div class="project-img-icon">⬡</div>
+      </div>
+      <div class="project-body">
+        <div class="project-tech">Python · ML · Graph Algorithms · Maps</div>
+        <div class="project-title">Nairobi Supply Chain Optimizer</div>
+        <div class="project-desc">An AI-powered logistics system that finds the most efficient delivery routes for produce distribution across Nairobi using machine learning and graph algorithms with a live interactive map.</div>
+        <span class="project-link">View on GitHub →</span>
+      </div>
+    </a>
+
+    <a class="project-card reveal" href="https://github.com/EmmanuelOchieng01/Small-and-medium-Enterprises-credit-scoring" target="_blank">
+      <div class="project-img">
+        <div class="project-img-pattern"></div>
+        <div class="project-img-icon">◈</div>
+      </div>
+      <div class="project-body">
+        <div class="project-tech">Python · ML · SHAP · Explainable AI</div>
+        <div class="project-title">SME Credit Scoring — Kenya</div>
+        <div class="project-desc">A machine learning credit scoring system for Kenyan SMEs using explainable AI. Features transaction data simulation, risk prediction models, and SHAP interpretability for transparent decisions.</div>
+        <span class="project-link">View on GitHub →</span>
+      </div>
+    </a>
+
+    <a class="project-card reveal" href="https://github.com/EmmanuelOchieng01/Commodity_futures_simulator" target="_blank">
+      <div class="project-img">
+        <div class="project-img-pattern"></div>
+        <div class="project-img-icon">△</div>
+      </div>
+      <div class="project-body">
+        <div class="project-tech">Flask · NumPy · Plotly · Monte Carlo</div>
+        <div class="project-title">Commodity Futures Risk Simulator</div>
+        <div class="project-desc">A Monte Carlo commodity futures simulator with 4 hedging strategies, advanced risk metrics including VaR, ES, and Sharpe ratio, and interactive visualizations for financial risk management.</div>
+        <span class="project-link">View on GitHub →</span>
+      </div>
+    </a>
+
+    <a class="project-card reveal" href="https://github.com/EmmanuelOchieng01/kenya-agro-weather-predictor" target="_blank">
+      <div class="project-img">
+        <div class="project-img-pattern"></div>
+        <div class="project-img-icon">◉</div>
+      </div>
+      <div class="project-body">
+        <div class="project-tech">ML · AI · Agriculture · Kenya</div>
+        <div class="project-title">Kenya Agro-Weather Yield Predictor</div>
+        <div class="project-desc">AI-powered crop yield prediction for Kenyan farmers using machine learning trained on weather patterns and agricultural data — making precision farming accessible.</div>
+        <span class="project-link">View on GitHub →</span>
+      </div>
+    </a>
+
+    <a class="project-card reveal" href="https://github.com/EmmanuelOchieng01/Market-research-assistantAI" target="_blank">
+      <div class="project-img">
+        <div class="project-img-pattern"></div>
+        <div class="project-img-icon">⊕</div>
+      </div>
+      <div class="project-body">
+        <div class="project-tech">NLP · Sentiment Analysis · Python</div>
+        <div class="project-title">Market Research Intelligence AI</div>
+        <div class="project-desc">An automated intelligence system that collects, structures, and summarises global commodity and agriculture news using NLP and sentiment analysis — converting raw data into organised market insight.</div>
+        <span class="project-link">View on GitHub →</span>
+      </div>
+    </a>
+
+    <a class="project-card reveal" href="https://github.com/EmmanuelOchieng01/data-exploration-toolkit" target="_blank">
+      <div class="project-img">
+        <div class="project-img-pattern"></div>
+        <div class="project-img-icon">▣</div>
+      </div>
+      <div class="project-body">
+        <div class="project-tech">Python · Web · CSV · Excel</div>
+        <div class="project-title">No-Code Data Exploration Toolkit</div>
+        <div class="project-desc">Upload. Clean. Explore. Visualise. A reusable, no-code toolkit that transforms any CSV or Excel file into actionable insights through an interactive web interface — for non-technical teams.</div>
+        <span class="project-link">View on GitHub →</span>
+      </div>
+    </a>
+
+  </div>
+</section>
+
+<!-- TEAM -->
+<section class="team" id="team">
+  <div class="reveal">
+    <div class="section-label">The team</div>
+    <h2 class="section-title">Two minds. One mission.</h2>
+    <p class="section-sub">AIRA was founded on the belief that the best intelligence comes from pairing deep technical capability with real operational expertise. That is us.</p>
+  </div>
+  <div class="team-grid">
+    <div class="team-card reveal">
+      <div class="team-avatar">EO</div>
+      <div class="team-name">Emmanuel Ochieng</div>
+      <div class="team-role">Data Scientist & Full-Stack Engineer · Co-Founder</div>
+      <div class="team-bio">Emmanuel builds the intelligence layer. A data scientist and full-stack developer with deep expertise in machine learning, AI systems, and applied quantitative research for African business contexts. He designs the models, builds the tools, and engineers the systems that make AIRA's work tangible and deployable.</div>
+      <div class="team-skills">
+        <span class="skill-tag">Data Science</span>
+        <span class="skill-tag">Machine Learning</span>
+        <span class="skill-tag">Full-Stack Dev</span>
+        <span class="skill-tag">AI & Prompt Engineering</span>
+        <span class="skill-tag">Python</span>
+        <span class="skill-tag">Flask</span>
+      </div>
+    </div>
+    <div class="team-card reveal">
+      <div class="team-avatar">HH</div>
+      <div class="team-name">Hilda Hinga</div>
+      <div class="team-role">HR & Procurement Specialist · Co-Founder</div>
+      <div class="team-bio">Hilda brings the domain expertise that makes AIRA's intelligence operationally real. With a background in HR and procurement operations, she knows exactly where Kenyan organisations lose money, where compliance gaps live, and what a procurement manager actually needs to see on a dashboard. She translates business reality into analytical precision.</div>
+      <div class="team-skills">
+        <span class="skill-tag">Procurement Operations</span>
+        <span class="skill-tag">HR Analytics</span>
+        <span class="skill-tag">Vendor Management</span>
+        <span class="skill-tag">Compliance</span>
+        <span class="skill-tag">Process Audit</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="reveal">
+    <div class="section-label">Get in touch</div>
+    <h2 class="section-title">Let's find your number.</h2>
+    <p class="section-sub">Every organisation has a number nobody is looking at. A cost that compounds quietly. An opportunity invisible in the noise. Let's find yours — and show you what to do with it.</p>
+  </div>
+
+  <div class="contact-grid reveal">
+    <div class="contact-item">
+      <div class="contact-item-label">Phone & WhatsApp</div>
+      <a href="https://wa.me/254729478663" class="contact-item-val">+254 729 478 663</a>
+      <a href="tel:+254769773174" class="contact-item-val" style="margin-top:0.4rem">+254 769 773 174</a>
+    </div>
+    <div class="contact-item">
+      <div class="contact-item-label">WhatsApp Direct</div>
+      <a href="https://wa.me/254729478663" class="contact-item-val">Message us on WhatsApp</a>
+    </div>
+    <div class="contact-item">
+      <div class="contact-item-label">Our work</div>
+      <a href="https://github.com/EmmanuelOchieng01" target="_blank" class="contact-item-val">github.com/EmmanuelOchieng01</a>
+    </div>
+  </div>
+
+  <div class="social-row reveal">
+    <a href="https://www.instagram.com/1.emanuell/?hl=en" target="_blank" class="social-link">Instagram</a>
+    <a href="https://github.com/EmmanuelOchieng01" target="_blank" class="social-link">GitHub</a>
+    <a href="https://business.facebook.com/latest/home?business_id=680747802719402&asset_id=101050071652556" target="_blank" class="social-link">Facebook</a>
+    <a href="https://x.com/nenteen99" target="_blank" class="social-link">X / Twitter</a>
+  </div>
+
+  <div class="reveal">
+    <a href="https://wa.me/254729478663?text=Hi%20AIRA%2C%20I%27d%20like%20to%20discuss%20a%20project." class="btn-primary" style="font-size:0.9rem; padding:1rem 2.5rem;">Start the conversation →</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">AIRA</div>
+  <div class="footer-copy">Applied Intelligence & Research Associates · Nairobi, Kenya · © 2026</div>
+</footer>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
